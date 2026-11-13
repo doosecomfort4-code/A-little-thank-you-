@@ -4,654 +4,494 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111111">
-<title>A Little Thank You | Kinnex</title>
+<title>A Little Thank You</title>
 
 <style>
 :root {
   --red: #8B0000;
   --white: #FFFFFF;
   --black: #111111;
-  --grey: #eeeeee;
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: Arial, sans-serif;
   background: var(--black);
   color: var(--white);
-  overflow-x: hidden;
+  text-align: center;
 }
 
 .screen {
   display: none;
   min-height: 100vh;
-  padding: 35px 22px;
-  align-items: center;
+  padding: 35px 20px;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
-  text-align: center;
+  animation: fadeIn .6s ease;
 }
 
 .screen.active {
   display: flex;
-  animation: fadeIn .8s ease;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-h1 {
-  font-size: clamp(40px, 9vw, 68px);
-  line-height: 1.12;
-  margin: 18px 0;
-}
-
-h2 {
+h1, h2 {
   margin-bottom: 18px;
 }
 
 p {
-  max-width: 480px;
-  line-height: 1.85;
-  margin: 12px auto;
-  font-size: 15px;
-}
-
-.red-text {
-  color: var(--red);
-}
-
-.tag {
-  font-size: 11px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  color: #cccccc;
-}
-
-.line {
-  width: 55px;
-  height: 4px;
-  background: var(--red);
-  margin: 20px auto;
-  border-radius: 5px;
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 10px auto;
 }
 
 button {
-  padding: 15px 30px;
   border: none;
-  border-radius: 5px;
-  font-size: 14px;
+  border-radius: 25px;
+  padding: 13px 25px;
+  margin: 12px 5px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
-  margin: 12px;
-  transition: .3s;
+  background: var(--red);
+  color: white;
+  transition: .25s;
 }
 
 button:hover {
   transform: translateY(-3px);
-}
-
-.red-button {
-  background: var(--red);
-  color: var(--white);
-}
-
-.white-button {
-  background: var(--white);
-  color: var(--red);
-}
-
-.black-button {
-  background: var(--black);
-  color: var(--white);
+  background: #a30000;
 }
 
 .red-screen {
   background: var(--red);
-  color: var(--white);
+  color: white;
+}
+
+.white-screen {
+  background: white;
+  color: var(--black);
 }
 
 .black-screen {
   background: var(--black);
-  color: var(--white);
+  color: white;
 }
 
-.white-screen {
-  background: var(--white);
-  color: var(--black);
+/* Welcome */
+.small-heart {
+  color: #ffb6c1;
+  font-size: 25px;
+  margin-bottom: 12px;
 }
 
-.footer {
-  font-size: 11px;
-  opacity: .7;
-  margin-top: 35px;
-}
-
-/* ENVELOPE */
-
+/* Envelope */
 .envelope-area {
-  width: 290px;
-  height: 190px;
-  position: relative;
-  margin: 40px auto;
-  perspective: 1000px;
+  margin: 35px auto;
   cursor: pointer;
+  perspective: 800px;
 }
 
 .envelope {
-  position: absolute;
-  inset: 0;
-  background: var(--white);
-  border-radius: 7px;
-  box-shadow: 0 15px 40px #0005;
+  width: 230px;
+  height: 145px;
+  background: white;
+  position: relative;
+  margin: auto;
+  border-radius: 5px;
+  box-shadow: 0 8px 25px #0005;
 }
 
 .envelope::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background: #eeeeee;
-  clip-path: polygon(0 100%, 50% 45%, 100% 100%);
+  bottom: 0;
+  left: 0;
+  border-left: 115px solid transparent;
+  border-right: 115px solid transparent;
+  border-bottom: 85px solid #e8e8e8;
   z-index: 2;
 }
 
-.envelope-flap {
+.flap {
   position: absolute;
-  inset: 0;
-  background: #dddddd;
-  clip-path: polygon(0 0, 100% 0, 50% 65%);
+  top: 0;
+  left: 0;
+  border-left: 115px solid transparent;
+  border-right: 115px solid transparent;
+  border-top: 90px solid #b22222;
   transform-origin: top;
-  transition: transform .9s ease;
-  z-index: 4;
+  transition: transform .7s;
+  z-index: 3;
+}
+
+.envelope-area.open .flap {
+  transform: rotateX(180deg);
 }
 
 .envelope-label {
   position: absolute;
-  top: 80%;
+  top: 52px;
   width: 100%;
-  text-align: center;
-  font-size: 12px;
+  color: #8B0000;
   font-weight: bold;
-  color: var(--red);
-  letter-spacing: 3px;
-  z-index: 3;
+  z-index: 4;
 }
 
-.envelope-area.open .envelope-flap {
-  transform: rotateX(180deg);
+.hint {
+  margin-top: 18px;
+  font-size: 14px;
+  opacity: .8;
 }
 
 .letter {
   display: none;
-  width: 100%;
-  max-width: 520px;
-  background: var(--white);
-  color: var(--black);
-  padding: 30px;
-  border-radius: 8px;
+  max-width: 600px;
+  background: white;
+  color: #222;
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 25px;
   text-align: left;
-  line-height: 1.9;
-  box-shadow: 0 15px 40px #0004;
+  line-height: 1.8;
+  box-shadow: 0 8px 25px #0003;
 }
 
 .letter.visible {
   display: block;
-  animation: letterOpen 1s ease;
-}
-
-@keyframes letterOpen {
-  from {
-    opacity: 0;
-    transform: translateY(40px) scale(.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.letter h2 {
-  color: var(--red);
-}
-
-.letter p {
-  color: #333333;
-  margin: 15px 0;
-}
-
-/* APPRECIATION CARDS */
-
-.cards {
-  width: 100%;
-  max-width: 520px;
-  margin-top: 20px;
-}
-
-.card {
-  background: var(--white);
-  color: var(--black);
-  padding: 24px;
-  margin: 15px 0;
-  border-radius: 7px;
-  border-left: 6px solid var(--red);
-  text-align: left;
-  box-shadow: 0 8px 25px #0002;
-  transition: .3s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-}
-
-.card h3 {
-  color: var(--red);
-  margin-bottom: 10px;
-}
-
-.card p {
-  margin: 0;
-  color: #444;
-  font-size: 14px;
-}
-
-/* FINAL MESSAGE */
-
-.message-box {
-  display: none;
-  background: var(--white);
-  color: var(--black);
-  padding: 30px;
-  border-radius: 8px;
-  max-width: 430px;
-  margin: 25px auto;
   animation: fadeIn .8s ease;
 }
 
-.message-box.visible {
+/* Appreciation reveal cards */
+.reveal-card {
+  width: min(100%, 430px);
+  margin: 10px auto;
+  border: 1px solid #ffffff55;
+  border-radius: 13px;
+  overflow: hidden;
+  background: #ffffff10;
+}
+
+.reveal-trigger {
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  padding: 18px;
+  background: transparent;
+  color: white;
+}
+
+.reveal-trigger:hover {
+  background: #ffffff18;
+}
+
+.reveal-content {
+  display: none;
+  padding: 18px;
+  background: white;
+  color: #222;
+  line-height: 1.7;
+}
+
+.reveal-card.open .reveal-content {
   display: block;
+  animation: fadeIn .5s ease;
 }
 
-.message-box h2 {
-  color: var(--red);
+/* Floating heart animation */
+.heart-burst {
+  position: fixed;
+  pointer-events: none;
+  z-index: 20;
+  font-size: 25px;
+  animation: floatHeart 1.5s ease-out forwards;
 }
 
-.message-box p {
-  color: #333;
-}
-
-@media(max-width: 400px) {
-  .envelope-area {
-    width: 260px;
-    height: 170px;
+@keyframes floatHeart {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(.5) rotate(0deg);
   }
-
-  .letter {
-    padding: 22px;
+  20% {
+    opacity: 1;
   }
+  100% {
+    opacity: 0;
+    transform: translateY(-130px) scale(1.4) rotate(25deg);
+  }
+}
+
+/* Final message */
+.final-box {
+  display: none;
+  max-width: 550px;
+  padding: 25px;
+  border-radius: 15px;
+  background: white;
+  color: #222;
+  line-height: 1.8;
+  margin-top: 20px;
+}
+
+.final-box.visible {
+  display: block;
+  animation: fadeIn .7s ease;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 1. WELCOME -->
-
-<section class="screen black-screen active" id="welcome">
-
-  <div class="tag">A small gesture of appreciation</div>
-
-  <h1>
-    A Little<br>
-    <span class="red-text">Thank You.</span>
-  </h1>
-
-  <div class="line"></div>
-
+<!-- WELCOME -->
+<section class="screen active red-screen" id="welcome">
+  <div class="small-heart">♥</div>
+  <h1>A Little Thank You</h1>
   <p>
-    Some people make a difference through
-    the little things they do.
-    This is for one of those people.
+    Some people make life a little easier simply by being
+    willing to help. This little corner is dedicated to one
+    of those people.
   </p>
-
-  <button class="red-button"
-    onclick="show('envelopeScreen')">
-    Enter Experience →
-  </button>
-
-  <div class="footer">
-    A personal appreciation project
-  </div>
-
+  <p>Ready for a tiny surprise?</p>
+  <button onclick="showScreen('envelopeScreen')">Let's go!</button>
 </section>
 
+<!-- ENVELOPE -->
+<section class="screen black-screen" id="envelopeScreen">
+  <h2>A little note for you</h2>
+  <p>There's something inside. Go ahead and open it!</p>
 
-<!-- 2. ENVELOPE -->
-
-<section class="screen red-screen" id="envelopeScreen">
-
-  <div class="tag">Especially for Kinnex</div>
-
-  <h1>
-    A Letter<br>
-    <span style="color:#111111;">For You.</span>
-  </h1>
-
-  <p>
-    There's something I've wanted
-    to say, and I finally found a way.
-  </p>
-
-  <div class="envelope-area"
-       id="envelope"
-       onclick="openLetter()">
-
+  <div class="envelope-area" id="envelopeArea" onclick="openLetter()">
     <div class="envelope">
-
-      <div class="envelope-flap"></div>
-
-      <div class="envelope-label">
-        FOR KINNEX
-      </div>
-
+      <div class="flap"></div>
+      <div class="envelope-label">For Kinnex</div>
     </div>
-
   </div>
 
-  <p id="hint">
-    Tap the envelope to open your letter.
-  </p>
-
-  <!-- THE LETTER -->
+  <div class="hint" id="envelopeHint">Tap the envelope to open it</div>
 
   <div class="letter" id="letter">
-
-    <h2>Dear Kinnex,</h2>
+    <h2 style="color:#8B0000;">Hey Kinnex! 👋</h2>
 
     <p>
-      I honestly don't know if I say this enough,
-      but I really appreciate you. And I mean that
-      in the simplest and most genuine way possible.
+      First of all, congratulations! You've officially been
+      selected for a very important position...
+      <strong>Someone I genuinely appreciate.</strong>
     </p>
 
     <p>
-      You've offered to help me so many times,
-      even when you probably had your own things
-      to worry about. Maybe to you, some of those
-      moments were ordinary gestures, but to me,
-      they meant more than you might realise.
+      I just wanted to say thank you for being someone who's
+      always willing to lend a hand. You've offered to help me
+      more times than I can count, and even when I don't always
+      take you up on it, I notice. I really do.
     </p>
 
     <p>
-      It's a beautiful thing to come across someone
-      who is willing to lend a hand, offer support,
-      or simply make things a little easier for
-      someone else.
+      It's a lovely thing to know that there are people who
+      are willing to show up and help without making a big
+      deal out of it. That kindness means something.
     </p>
 
     <p>
-      I hope life gives you the same kindness you
-      so freely offer to others. I hope you meet
-      people who appreciate your efforts and remind
-      you that your generosity matters.
+      So, no long speech, no award ceremony with a red carpet
+      (we'll arrange that another day 😂). Just a genuine
+      thank you for being helpful, thoughtful and kind.
     </p>
 
     <p>
-      I may not always have the perfect words to
-      express my gratitude, but I notice the little
-      things. I remember the offers to help and
-      the willingness to show up.
+      Keep being your awesome self. And please don't let this
+      appreciation go to your head. 😂
     </p>
 
-    <p>
-      This is simply my little way of saying that
-      your kindness hasn't gone unnoticed.
-    </p>
+    <p><strong>You're appreciated, Kinnex. Thank you!</strong></p>
 
-    <p>
-      Thank you for being you, Kinnex.
-    </p>
+    <p>— From your friend</p>
+  </div>
 
-    <p>
-      <strong>With genuine appreciation,</strong><br>
-      Your friend.
-    </p>
+  <button onclick="showScreen('appreciation')">Continue</button>
+</section>
 
-    <button class="red-button"
-      onclick="show('appreciation')">
-      Continue →
+<!-- APPRECIATION -->
+<section class="screen red-screen" id="appreciation">
+  <h1>A Few Things Worth Appreciating</h1>
+  <p>Tap each box. There's a little message waiting inside.</p>
+
+  <div class="reveal-card">
+    <button class="reveal-trigger" onclick="toggleCard(this)">
+      Your willingness to help ✨
     </button>
-
+    <div class="reveal-content">
+      You have offered to help me so many times. Whether I
+      accept every offer or not, I appreciate that you are
+      willing to be there.
+    </div>
   </div>
 
-</section>
-
-
-<!-- 3. APPRECIATION -->
-
-<section class="screen white-screen" id="appreciation">
-
-  <div class="tag red-text">
-    Little things that matter
-  </div>
-
-  <h1>
-    Things I<br>
-    <span class="red-text">Appreciate.</span>
-  </h1>
-
-  <div class="cards">
-
-    <div class="card">
-      <h3>Your Kindness</h3>
-      <p>
-        Your willingness to help others
-        is something worth appreciating.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Your Support</h3>
-      <p>
-        Thank you for every time you offered
-        to lend a helping hand.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Your Generosity</h3>
-      <p>
-        It's not always about what someone
-        gives, but the thought behind it.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Your Thoughtfulness</h3>
-      <p>
-        The little gestures can mean more
-        than people realise.
-      </p>
-    </div>
-
-  </div>
-
-  <button class="red-button"
-    onclick="show('surprise')">
-    One Last Thing →
-  </button>
-
-</section>
-
-
-<!-- 4. FINAL SURPRISE -->
-
-<section class="screen black-screen" id="surprise">
-
-  <div class="tag">Before you leave</div>
-
-  <h1>
-    One Last<br>
-    <span class="red-text">Message.</span>
-  </h1>
-
-  <div class="line"></div>
-
-  <p>
-    I hope you never underestimate how much
-    your kindness can mean to someone.
-  </p>
-
-  <button class="red-button"
-    onclick="revealMessage()">
-    Reveal Message
-  </button>
-
-  <div class="message-box" id="finalMessage">
-
-    <h2>Thank You, Kinnex.</h2>
-
-    <p>
-      Your efforts are noticed.
-      Your kindness is appreciated.
-      And I hope this little surprise
-      made you feel valued.
-    </p>
-
-    <p>
-      Never stop being a good person.
-      The world needs more people who
-      are willing to make a difference.
-    </p>
-
-    <button class="red-button"
-      onclick="show('goodbye')">
-      Finish →
+  <div class="reveal-card">
+    <button class="reveal-trigger" onclick="toggleCard(this)">
+      Your support 🤝
     </button>
-
+    <div class="reveal-content">
+      Sometimes, simply knowing that someone is willing to
+      help makes a difference. Thank you for being that kind
+      of person.
+    </div>
   </div>
 
-</section>
-
-
-<!-- 5. GOODBYE -->
-
-<section class="screen red-screen" id="goodbye">
-
-  <div class="tag">End of experience</div>
-
-  <h1>
-    That's All,<br>
-    <span style="color:#111111;">Kinnex.</span>
-  </h1>
-
-  <div class="line" style="background:white;"></div>
-
-  <p>
-    Thank you for taking the time
-    to go through this little project.
-  </p>
-
-  <p>
-    Take care, keep growing and
-    keep being awesome.
-  </p>
-
-  <button class="white-button"
-    onclick="leaveWebsite()">
-    Leave Website
-  </button>
-
-  <div class="footer">
-    A Little Thank You · Made for Kinnex
+  <div class="reveal-card">
+    <button class="reveal-trigger" onclick="toggleCard(this)">
+      Your kindness 😊
+    </button>
+    <div class="reveal-content">
+      Never underestimate the good that small acts of
+      kindness can do. Yours haven't gone unnoticed.
+    </div>
   </div>
 
+  <div class="reveal-card">
+    <button class="reveal-trigger" onclick="toggleCard(this)">
+      A little reminder 💬
+    </button>
+    <div class="reveal-content">
+      You don't have to do something huge to make a positive
+      difference. Sometimes being willing to help is already
+      a big deal.
+    </div>
+  </div>
+
+  <div class="reveal-card">
+    <button class="reveal-trigger" onclick="toggleCard(this)">
+      Your appreciation award 🏆
+    </button>
+    <div class="reveal-content">
+      Official award for being a helpful human being:
+      <strong>YOU DESERVE YOUR FLOWERS!</strong>
+      Please accept this imaginary trophy. 😂
+    </div>
+  </div>
+
+  <button onclick="showScreen('surprise')">One Last Thing</button>
 </section>
 
+<!-- SURPRISE -->
+<section class="screen white-screen" id="surprise">
+  <h1>A Small Surprise</h1>
+  <p>
+    You've made it this far, so here's one more little
+    reminder: good people deserve to know that their
+    kindness is appreciated.
+  </p>
+
+  <button onclick="revealMessage()">Reveal Message</button>
+
+  <div class="final-box" id="finalMessage">
+    <h2 style="color:#8B0000;">THANK YOU, KINNEX! ♥</h2>
+    <p>
+      Keep being kind. Keep being helpful. Keep being you.
+      The world could use more people who are willing to
+      make things a little easier for others.
+    </p>
+    <p>And yes, you are officially appreciated. 😂</p>
+  </div>
+
+  <button onclick="showScreen('goodbye')">Finish</button>
+</section>
+
+<!-- GOODBYE -->
+<section class="screen black-screen" id="goodbye">
+  <h1>That's All, Kinnex!</h1>
+  <p>
+    Thanks for taking a few minutes to visit this little
+    appreciation corner.
+  </p>
+  <p>Stay awesome, and have a lovely day! 😊</p>
+  <button onclick="leaveWebsite()">Leave Website</button>
+</section>
 
 <script>
-
-// NAVIGATION
-
-function show(id) {
-
+function showScreen(id) {
   document.querySelectorAll('.screen').forEach(screen => {
     screen.classList.remove('active');
   });
 
   document.getElementById(id).classList.add('active');
-
-  window.scrollTo(0, 0);
-
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// OPEN LETTER
-
 function openLetter() {
-
-  const envelope = document.getElementById('envelope');
+  const envelope = document.getElementById('envelopeArea');
+  const letter = document.getElementById('letter');
+  const hint = document.getElementById('envelopeHint');
 
   if (envelope.classList.contains('open')) return;
 
   envelope.classList.add('open');
-
-  document.getElementById('hint').style.display = 'none';
+  hint.style.display = 'none';
 
   setTimeout(() => {
-
-    document.getElementById('letter')
-      .classList.add('visible');
-
-  }, 700);
-
+    letter.classList.add('visible');
+  }, 650);
 }
 
-// REVEAL FINAL MESSAGE
+function createHeart(button) {
+  const heart = document.createElement('span');
+  heart.className = 'heart-burst';
+  heart.textContent = '♥';
+
+  const rect = button.getBoundingClientRect();
+  heart.style.left = (rect.left + rect.width / 2) + 'px';
+  heart.style.top = (rect.top + window.scrollY) + 'px';
+  heart.style.color = '#ffb6c1';
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 1600);
+}
+
+function toggleCard(button) {
+  const card = button.parentElement;
+  card.classList.toggle('open');
+
+  const isOpen = card.classList.contains('open');
+  button.setAttribute('aria-expanded', String(isOpen));
+
+  if (isOpen) {
+    createHeart(button);
+  }
+}
 
 function revealMessage() {
+  document.getElementById('finalMessage').classList.add('visible');
 
-  document.getElementById('finalMessage')
-    .classList.add('visible');
+  const button = document.querySelector(
+    '#surprise button'
+  );
 
+  createHeart(button);
 }
-
-// EXIT
 
 function leaveWebsite() {
+  document.getElementById('finalMessage').classList.remove('visible');
+  document.getElementById('letter').classList.remove('visible');
+  document.getElementById('envelopeArea').classList.remove('open');
+  document.getElementById('envelopeHint').style.display = 'block';
 
-  show('welcome');
+  document.querySelectorAll('.reveal-card').forEach(card => {
+    card.classList.remove('open');
+    card.querySelector('button').setAttribute('aria-expanded', 'false');
+  });
 
-  document.getElementById('finalMessage')
-    .classList.remove('visible');
-
-  document.getElementById('letter')
-    .classList.remove('visible');
-
-  document.getElementById('envelope')
-    .classList.remove('open');
-
-  document.getElementById('hint').style.display = 'block';
-
+  showScreen('welcome');
 }
-
 </script>
 
 </body>
